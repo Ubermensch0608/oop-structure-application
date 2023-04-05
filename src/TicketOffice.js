@@ -8,9 +8,6 @@ var TicketOffice = /** @class */ (function () {
         this.getTicket = function () {
             return _this.tickets.shift();
         };
-        this.minusAmount = function (amount) {
-            _this.amount -= amount;
-        };
         this.plusAmount = function (amount) {
             _this.amount += amount;
         };

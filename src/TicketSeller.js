@@ -1,13 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * 1차 리팩토링
+ * - Theater의 티켓 판매 메서드 -> Ticket으로 이동
+ * - TicketOffice에 접근 가능한 것은 오직 TicketSeller
+ */
 var TicketSeller = /** @class */ (function () {
     function TicketSeller(ticketOffice) {
-        var _this = this;
-        this.getTicketOffice = function () {
-            return _this.ticketOffice;
-        };
         this.ticketOffice = ticketOffice;
     }
+    // public getTicketOffice = (): TicketOffice => {
+    //   return this.ticketOffice;
+    // };
+    TicketSeller.prototype.sellTo = function (audience) {
+        // 판매원이 티켓을 부스로부터 하나 가져다가
+        // 판매원은 받은 돈을 부스에 보관한다.
+        this.ticketOffice.plusAmount(audience.buy(this.ticketOffice.getTicket()));
+    };
     return TicketSeller;
 }());
 exports.default = TicketSeller;
+// class와 관련된 문제는 스스로 해결함

@@ -14,10 +14,6 @@ class TicketOffice {
     return this.tickets.shift();
   };
 
-  public minusAmount = (amount: number) => {
-    this.amount -= amount;
-  };
-
   public plusAmount = (amount: number) => {
     this.amount += amount;
   };
