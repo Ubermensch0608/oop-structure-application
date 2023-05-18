@@ -1,3 +1,4 @@
+import Audience from "./Audience";
 import Ticket from "./Ticket";
 
 class TicketOffice {
@@ -9,15 +10,19 @@ class TicketOffice {
     this.tickets = tickets;
   }
 
-  public getTicket() {
+  public sellTicketTo(audience: Audience) {
+    const ticket = this.getTicket();
+
+    if (ticket) {
+      this.plusAmount(audience.buy(ticket));
+    }
+  }
+
+  private getTicket() {
     return this.tickets.shift();
   }
 
-  public minusAmount(amount: number) {
-    this.amount -= amount;
-  }
-
-  public plusAmount(amount?: number) {
+  private plusAmount(amount?: number) {
     this.amount += amount || 0;
   }
 }

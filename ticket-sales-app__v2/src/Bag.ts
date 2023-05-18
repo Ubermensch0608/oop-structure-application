@@ -13,24 +13,27 @@ class Bag {
     this.amount = amount;
   }
 
-  public hasInvitation() {
+  public hold(ticket: Ticket) {
+    if (this.hasInvitation()) {
+      this.setTicket(ticket);
+      return 0;
+    }
+
+    this.setTicket(ticket);
+    this.minusAmount(ticket.getFee());
+    return ticket.getFee();
+  }
+
+  private hasInvitation() {
     return !!this.invitation;
   }
 
-  public hasTicket() {
-    return !!this.ticket;
-  }
-
-  public setTicket(ticket: Ticket) {
+  private setTicket(ticket: Ticket) {
     this.ticket = ticket;
   }
 
-  public minusAmount(amount?: number) {
+  private minusAmount(amount?: number) {
     this.amount -= amount || 0;
-  }
-
-  public plusAmount(amount: number) {
-    this.amount += amount;
   }
 }
 

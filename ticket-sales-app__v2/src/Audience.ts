@@ -1,4 +1,5 @@
 import Bag from "./Bag";
+import Ticket from "./Ticket";
 
 class Audience {
   private bag: Bag;
@@ -7,8 +8,9 @@ class Audience {
     this.bag = bag;
   }
 
-  public getBag() {
-    return this.bag;
+  // 티켓 값으로 지불한 금액 반환
+  public buy(ticket: Ticket): number {
+    return this.bag.hold(ticket);
   }
 }
 
