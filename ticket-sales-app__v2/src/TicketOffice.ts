@@ -10,19 +10,11 @@ class TicketOffice {
     this.tickets = tickets;
   }
 
-  public sellTicketTo(audience: Audience) {
-    const ticket = this.getTicket();
-
-    if (ticket) {
-      this.plusAmount(audience.buy(ticket));
-    }
-  }
-
-  private getTicket() {
+  public getTicket() {
     return this.tickets.shift();
   }
 
-  private plusAmount(amount?: number) {
+  public plusAmount(amount?: number) {
     this.amount += amount || 0;
   }
 }

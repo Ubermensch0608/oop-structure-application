@@ -13,8 +13,8 @@ const bag = new Bag(money);
 const James = new Audience(bag);
 
 const ticketOffice = new TicketOffice(999_999, [
-  new Ticket(30_000),
   new Ticket(20_000),
+  new Ticket(30_000),
 ]);
 
 const Andy = new TicketSeller(ticketOffice);
