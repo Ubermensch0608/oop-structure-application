@@ -2,9 +2,7 @@ import Money from "./Money";
 import Movie from "./Movie";
 import SequenceCondition from "./condition/SequenceCondition";
 import AmountDiscountPolicy from "./policy/AmountDiscountPolicy";
-import PercentPolicy from "./policy/PercentDiscountPolicy";
-
-console.log("hihi");
+import NoneDiscountPolicy from "./policy/NoneDiscountPolicy";
 
 const avatar = new Movie(
   "아바타",
@@ -16,4 +14,11 @@ const avatar = new Movie(
   ])
 );
 
-console.log(avatar);
+const titanic = new Movie(
+  "타이타닉",
+  120,
+  Money.wons(15_000),
+  new NoneDiscountPolicy()
+);
+
+console.log(titanic);

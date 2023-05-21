@@ -3,10 +3,12 @@ import Screening from "../Screening";
 import DiscountCondition from "../condition/DiscountCondition";
 
 abstract class DiscountPolicy {
-  private conditions: DiscountCondition[];
+  private conditions!: DiscountCondition[];
 
-  constructor(conditions: DiscountCondition[]) {
-    this.conditions = conditions;
+  constructor(conditions?: DiscountCondition[]) {
+    if (conditions) {
+      this.conditions = conditions;
+    }
   }
 
   public calculateDiscountAmount(screening: Screening) {
