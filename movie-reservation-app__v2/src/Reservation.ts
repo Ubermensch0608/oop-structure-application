@@ -19,6 +19,38 @@ class Reservation {
     this.fee = fee;
     this.audienceCount = audienceCount;
   }
+
+  public getCustomer() {
+    return this.customer;
+  }
+
+  public setCustomer(customer: Customer) {
+    this.customer = customer;
+  }
+
+  public getScreening() {
+    return this.screening;
+  }
+
+  public setScreening(screening: Screening) {
+    this.screening = screening;
+  }
+
+  public getFee() {
+    return this.fee;
+  }
+
+  public setFee(fee: Money) {
+    this.fee = fee;
+  }
+
+  public getAudienceCount() {
+    return this.audienceCount;
+  }
+
+  public setAudienceCount(audienceCount: number) {
+    this.audienceCount = audienceCount;
+  }
 }
 
 export default Reservation;
