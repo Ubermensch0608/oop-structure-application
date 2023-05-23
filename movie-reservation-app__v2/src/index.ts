@@ -23,10 +23,3 @@ import NoneDiscountPolicy from "./policy/NoneDiscountPolicy";
 //   Money.wons(15_000),
 //   new NoneDiscountPolicy()
 // );
-
-const agency = new ReservationAgency();
-
-const screening = new Screening();
-
-const Sam = new Customer("Sam", "id=sam");
-agency.reserve(screening, Sam, 10);
