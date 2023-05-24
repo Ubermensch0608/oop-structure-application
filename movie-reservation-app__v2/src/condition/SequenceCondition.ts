@@ -1,15 +1,15 @@
 import Screening from "../Screening";
 import DiscountCondition from "./DiscountCondition";
 
-class SequenceCondition implements DiscountCondition {
+class SequenceCondition {
   private sequence: number;
 
   constructor(sequence: number) {
     this.sequence = sequence;
   }
 
-  public isSatisfiedBy(screening: Screening): boolean {
-    return screening.isSequence(this.sequence);
+  public isSatisfiedBy(screening: Screening) {
+    return this.sequence === screening.getSequence();
   }
 }
 

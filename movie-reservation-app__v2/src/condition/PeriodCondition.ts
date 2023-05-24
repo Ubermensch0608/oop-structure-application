@@ -1,6 +1,5 @@
 import Screening from "../Screening";
-
-type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6; // 일, 월, 화, 수, 목, 금, 토
+import type { DayOfWeek } from "./DiscountCondition";
 
 class PeriodCondition {
   private dayOfWeek: DayOfWeek; // 일주일 중 몇 요일인지 반환 0:일요일
@@ -14,14 +13,11 @@ class PeriodCondition {
   }
 
   public isSatisfiedBy(screening: Screening) {
-    // 상영 요일이 동일한지
-    const isDayOfWeekSame =
-      screening.getStartTime().getDay() === this.dayOfWeek;
-
     return (
-      isDayOfWeekSame &&
-      this.startTime <= new Date(screening.getStartTime().toLocaleString()) &&
-      this.endTime >= new Date(screening.getStartTime().toLocaleString())
+      this.dayOfWeek === screening.getWhenScreened().getDay() &&
+      this.startTime <=
+        new Date(screening.getWhenScreened().toLocaleString()) &&
+      this.endTime >= new Date(screening.getWhenScreened().toLocaleString())
     );
   }
 }

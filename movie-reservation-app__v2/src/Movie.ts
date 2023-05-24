@@ -1,6 +1,8 @@
 import Money from "./Money";
 import Screening from "./Screening";
 import DiscountCondition from "./condition/DiscountCondition";
+import PeriodCondition from "./condition/PeriodCondition";
+import SequenceCondition from "./condition/SequenceCondition";
 import DiscountPolicy from "./policy/DiscountPolicy";
 
 export type MovieType =
@@ -22,7 +24,9 @@ class Movie {
   private title: string;
   private runningTime: string;
   private fee: Money;
-  private discountConditions: DiscountCondition[];
+  // private discountConditions: DiscountCondition[];
+  private sequenceConditions: SequenceCondition[];
+  private periodConditions: PeriodCondition[];
 
   private movieType: MovieType;
   private discountAmount: Money;
@@ -35,15 +39,21 @@ class Movie {
   }
 
   private isDiscountable(screening: Screening) {
-    let isDiscountable = false;
+    return (
+      this.checkPeriodConditions(screening) ||
+      this.checkSequenceConditions(screening)
+    );
+  }
 
-    this.discountConditions.forEach((condition) => {
-      if (condition.isSatisfiedBy(screening)) {
-        isDiscountable = true;
-      }
-    });
-
-    return isDiscountable;
+  private checkPeriodConditions(screening: Screening) {
+    return !!this.periodConditions.find((condition) =>
+      condition.isSatisfiedBy(screening)
+    );
+  }
+  private checkSequenceConditions(screening: Screening) {
+    return !!this.sequenceConditions.find((condition) =>
+      condition.isSatisfiedBy(screening)
+    );
   }
 
   private calculateDiscountAmount() {
