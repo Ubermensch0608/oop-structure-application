@@ -1,60 +1,40 @@
+import { rootCertificates } from "tls";
 import Screening from "../Screening";
 
-// interface DiscountCondition {
-//   isSatisfiedBy(screening: Screening): boolean;
-// }
-export enum DiscountConditionType {
-  "SEQUENCE",
-  "PERIOD",
-} // 순번, 기간
+// 순번, 기간
+export type DiscountConditionType = "SEQUENCE" | "PERIOD";
+export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
+/**
+ * 책임
+ * - 할인 여부를 판단해야 한다.
+ */
 class DiscountCondition {
-  private type!: DiscountConditionType;
+  private type: DiscountConditionType;
+  private sequence: number;
+  private dayOfWeek: DayOfWeek;
+  private startTime: Date;
+  private endTime: Date;
 
-  private sequence!: number;
+  public isSatisfiedBy(screening: Screening) {
+    if (this.type === "PERIOD") {
+      return this.isSatisfiedByPeriod(screening);
+    }
 
-  private dayOfWeek!: number;
-  private startTime!: Date;
-  private endTime!: Date;
-
-  public getType() {
-    return this.type;
+    return this.isSatisfiedBySequence(screening);
   }
 
-  public setType(type: DiscountConditionType) {
-    this.type = type;
+  private isSatisfiedByPeriod(screening: Screening) {
+    return (
+      this.dayOfWeek === screening.getWhenScreened().getDay() &&
+      this.startTime <=
+        new Date(screening.getWhenScreened().toLocaleString()) &&
+      this.endTime >= new Date(screening.getWhenScreened().toLocaleString())
+    );
   }
 
-  public getDayOfWeek() {
-    return this.dayOfWeek;
-  }
-
-  public setDayOfWeek(dayOfWeek: number) {
-    this.dayOfWeek = dayOfWeek;
-  }
-
-  public getStartTime() {
-    return this.startTime;
-  }
-
-  public setStartTime(startTime: Date) {
-    this.startTime = startTime;
-  }
-
-  public getEndTime() {
-    return this.endTime;
-  }
-
-  public setEndTime(endTime: Date) {
-    this.endTime = endTime;
-  }
-
-  public getSequence() {
-    return this.sequence;
-  }
-
-  public setSequence(sequence: number) {
-    this.sequence = sequence;
+  private isSatisfiedBySequence(screening: Screening) {
+    return this.sequence === screening.getSequence();
   }
 }
 

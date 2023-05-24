@@ -8,77 +8,67 @@ export type MovieType =
   | "PERCENT_DISCOUNT"
   | "NONE_DISCOUNT";
 
+export enum MovieEnum {
+  AMOUNT_DISCOUNT, // 금액 할인 정책
+  PERCENT_DISCOUNT, // 비율 할인 정책
+  NONE_DISCOUNT, // 미적용
+}
+
+/**
+ * 책임
+ * - 요금을 계산해야 한다.
+ */
 class Movie {
-  private title!: string;
-  private runningTime!: number; // 상영 시간
-  private fee!: Money;
-  private discountConditions!: DiscountCondition[];
-  // private discountPolicy: DiscountPolicy;
+  private title: string;
+  private runningTime: string;
+  private fee: Money;
+  private discountConditions: DiscountCondition[];
 
-  // constructor(
-  //   title: string,
-  //   runningTime: number,
-  //   fee: Money,
-  //   discountPolicy: DiscountPolicy
-  // ) {
-  //   this.title = title;
-  //   this.runningTime = runningTime;
-  //   this.fee = fee;
-  //   this.discountPolicy = discountPolicy;
-  // }
+  private movieType: MovieType;
+  private discountAmount: Money;
+  private discountPercent: number;
 
-  // public getFee() {
-  //   return this.fee;
-  // }
-
-  // public calculateMovieFee(screening: Screening) {
-  //   return this.fee.minus(
-  //     this.discountPolicy.calculateDiscountAmount(screening)
-  //   );
-  // }
-
-  private movieType!: MovieType;
-  private discountAmount!: Money;
-  private discountPercent!: number;
-
-  public getMovieType() {
-    return this.movieType;
+  public calculateMovieFee(screening: Screening) {
+    if (this.isDiscountable(screening)) {
+      return this.fee.minus(this.calculateDiscountAmount());
+    }
   }
 
-  public setMovieType(movieType: MovieType) {
-    this.movieType = movieType;
+  private isDiscountable(screening: Screening) {
+    let isDiscountable = false;
+
+    this.discountConditions.forEach((condition) => {
+      if (condition.isSatisfiedBy(screening)) {
+        isDiscountable = true;
+      }
+    });
+
+    return isDiscountable;
   }
 
-  public getFee() {
-    return this.fee;
+  private calculateDiscountAmount() {
+    switch (this.movieType) {
+      case "AMOUNT_DISCOUNT":
+        return this.calculateAmountDiscountAmount();
+      case "PERCENT_DISCOUNT":
+        return this.calculatePercentDiscountAmount();
+      case "NONE_DISCOUNT":
+        return this.calculateNoneDiscountAmount();
+    }
+
+    throw new Error("movieType 예외 에러");
   }
 
-  public setFee(fee: Money) {
-    this.fee = fee;
-  }
-
-  public getDiscountConditions() {
-    return this.discountConditions;
-  }
-
-  public setDiscountConditions(discountConditions: DiscountCondition[]) {
-    this.discountConditions = discountConditions;
-  }
-
-  public getDiscountAmount() {
+  private calculateAmountDiscountAmount() {
     return this.discountAmount;
   }
 
-  public setDiscountAmount(discountAmount: Money) {
-    this.discountAmount = discountAmount;
+  private calculatePercentDiscountAmount() {
+    return this.fee.times(this.discountPercent);
   }
 
-  public getDiscountPercent() {
-    return this.discountPercent;
-  }
-
-  public setDiscountPercent(discountPercent: number) {
-    this.discountPercent = discountPercent;
+  private calculateNoneDiscountAmount() {
+    return Money.ZERO;
   }
 }
 
