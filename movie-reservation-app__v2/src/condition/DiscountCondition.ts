@@ -13,8 +13,33 @@ export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6; // 일, 월, 화, 수, 목, �
  * - 순번 조건을 판단하는 로직 변경
  * - 기간 조건을 판단하는 로직 변경
  */
-interface DiscountCondition {
-  isSatisfiedBy: (screening: Screening) => boolean;
+class DiscountCondition {
+  private type: DiscountConditionType;
+  private sequence: number;
+  private dayOfWeek: DayOfWeek;
+  private startTime: Date;
+  private endTime: Date;
+
+  public isDiscountable(screening: Screening) {
+    if (this.type === "PERIOD") {
+      return this.isSatisfiedByPeriod(screening);
+    }
+
+    return this.isSatisfiedBySequence(screening);
+  }
+
+  private isSatisfiedByPeriod(screening: Screening) {
+    return (
+      screening.getWhenScreened().getDay() === this.dayOfWeek &&
+      this.startTime <=
+        new Date(screening.getWhenScreened().toLocaleString()) &&
+      this.endTime >= new Date(screening.getWhenScreened().toLocaleString())
+    );
+  }
+
+  private isSatisfiedBySequence(screening: Screening) {
+    return this.sequence === screening.getSequence();
+  }
 }
 
 export default DiscountCondition;
