@@ -1,5 +1,5 @@
 import Customer from "./Customer";
-import Movie from "./Movie";
+import Movie from "./amount/Movie";
 import Reservation from "./Reservation";
 
 /**
@@ -21,6 +21,10 @@ class Screening {
     );
   }
 
+  private calculateFee(audienceCount: number) {
+    return this.movie.calculateMovieFee(this).times(audienceCount);
+  }
+
   public getWhenScreened() {
     return this.whenScreened;
   }
@@ -29,8 +33,8 @@ class Screening {
     return this.sequence;
   }
 
-  private calculateFee(audienceCount: number) {
-    return this.movie.calculateMovieFee(this).times(audienceCount);
+  public getMovieFee() {
+    return this.movie.calculateMovieFee(this);
   }
 }
 

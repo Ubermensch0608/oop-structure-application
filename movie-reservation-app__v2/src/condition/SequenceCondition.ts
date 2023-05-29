@@ -1,7 +1,7 @@
 import Screening from "../Screening";
 import DiscountCondition from "./DiscountCondition";
 
-class SequenceCondition {
+class SequenceCondition implements DiscountCondition {
   private sequence: number;
 
   constructor(sequence: number) {

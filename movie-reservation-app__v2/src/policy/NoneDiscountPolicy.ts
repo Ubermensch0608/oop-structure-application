@@ -1,9 +1,8 @@
 import Money from "../Money";
-import Screening from "../Screening";
 import DiscountPolicy from "./DiscountPolicy";
 
 class NoneDiscountPolicy extends DiscountPolicy {
-  public getDiscountAmount(screening: Screening): Money {
+  protected override getDiscountAmount(): Money {
     return Money.ZERO;
   }
 }

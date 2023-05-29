@@ -12,7 +12,7 @@ class AmountDiscountPolicy extends DiscountPolicy {
   }
 
   // @override
-  protected getDiscountAmount(screening: Screening): Money {
+  protected override getDiscountAmount(screening: Screening): Money {
     return this.discountAmount;
   }
 }

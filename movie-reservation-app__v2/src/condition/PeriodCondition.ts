@@ -1,7 +1,8 @@
 import Screening from "../Screening";
 import type { DayOfWeek } from "./DiscountCondition";
+import DiscountCondition from "./DiscountCondition";
 
-class PeriodCondition {
+class PeriodCondition implements DiscountCondition {
   private dayOfWeek: DayOfWeek; // 일주일 중 몇 요일인지 반환 0:일요일
   private startTime: Date;
   private endTime: Date;
