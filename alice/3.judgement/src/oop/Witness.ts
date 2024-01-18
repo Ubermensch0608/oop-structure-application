@@ -1,5 +1,4 @@
 export interface WitnessI {
-  name: string;
   enter(): this;
   giveEvidence(): string | null;
   getName(): string;
@@ -7,30 +6,42 @@ export interface WitnessI {
 
 abstract class Witness implements WitnessI {
   constructor(private evidence: string | null) {}
-  name: string = "";
   getName(): string {
-    return this.name;
+    return Witness.name;
   }
+
   enter(): this {
     return this;
   }
+
   giveEvidence(): string | null {
     return this.evidence;
   }
 }
 
-export class 모자장수 extends Witness {
-  name: string;
+export class Alice extends Witness {
   constructor(evidence: string | null) {
     super(evidence);
-    this.name = "모자장수";
+  }
+  override getName(): string {
+    return Alice.name;
   }
 }
 
-export class Alice extends Witness {
-  name: string;
+export class 모자장수 extends Witness {
   constructor(evidence: string | null) {
     super(evidence);
-    this.name = "앨리스";
+  }
+  override getName(): string {
+    return 모자장수.name;
+  }
+}
+
+export class 요리사 extends Witness {
+  constructor(evidence: string | null) {
+    super(evidence);
+  }
+  override getName(): string {
+    return 요리사.name;
   }
 }
